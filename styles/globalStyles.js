@@ -11,11 +11,32 @@ const GlobalStyle = createGlobalStyle`
 `
 
 export const CustomButton = styled(Button)`
-  width: 20px;
-  color: ${(props) => props.theme.fg} !important;
-  border-color: ${(props) => props.theme.fg} !important;
+    width: 200px;
+    background-color: ${(props) => props.theme.fg} !important;
+    color: ${(props) => props.theme.bg} !important;
+    border-color: ${(props) => props.theme.fg} !important;
 `
 
-export const CustomTextInput = styled(TextField)``
+export const CustomTextInput = styled(TextField)`
+    > label {
+        color: ${(props) => props.theme.fg} !important;
+    }
+
+    .MuiInputBase-input {
+        color: white !important;
+    }
+
+    .MuiInputBase-root {
+        margin-bottom: 12px !important;
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+        border-color: ${(props) => props.theme.fg} !important;
+    }
+`
+
+export const CustomForm = styled.form`
+    margin: 16px;
+`
 
 export default GlobalStyle

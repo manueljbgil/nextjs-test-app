@@ -1,3 +1,5 @@
+import LoginForm from '../components/LoginForm'
+
 export default function Profile() {
-  return <div> signed in </div>
+    return <LoginForm />
 }
