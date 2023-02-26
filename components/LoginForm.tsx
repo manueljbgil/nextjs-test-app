@@ -27,7 +27,7 @@ const LoginForm = () => {
                             variant="outlined"
                             required
                             placeholder="abc@gmail.com"
-                            field
+                            field="true"
                         />
                     )}
                 />
