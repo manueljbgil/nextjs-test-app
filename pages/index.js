@@ -26,9 +26,6 @@ export async function getStaticProps() {
 
 export default function Home(props) {
   const { allCategories, allPosts } = props;
-
-  console.log(allPosts);
-
   const subCategories = [...allCategories];
 
   return (
@@ -51,20 +48,6 @@ export default function Home(props) {
         <link
           rel="preload"
           href="/fonts/NanumMyeongjo-Bold.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin=""
-        />
-        <link
-          rel="preload"
-          href="/fonts/HindSiliguri-Light.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin=""
-        />
-        <link
-          rel="preload"
-          href="/fonts/HindSiliguri-Regular.ttf"
           as="font"
           type="font/ttf"
           crossOrigin=""

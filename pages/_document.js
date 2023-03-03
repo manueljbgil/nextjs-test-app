@@ -47,20 +47,6 @@ export default class MyDocument extends Document {
             type="font/woff"
             crossOrigin=""
           />
-          <link
-            rel="preload"
-            href="/fonts/HindSiliguri-Light.ttf"
-            as="font"
-            type="font/ttf"
-            crossOrigin=""
-          />
-          <link
-            rel="preload"
-            href="/fonts/HindSiliguri-Regular.ttf"
-            as="font"
-            type="font/ttf"
-            crossOrigin=""
-          />
         </Head>
         <body>
           <Main />

@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 700;
     font-display: swap;
   }
-  @font-face {
+  /* @font-face {
     font-family: 'Hind-Light';
     src: url('/fonts/HindSiliguri-Light.ttf') format('ttf');
     font-style: normal;
@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     font-style: bold;
     font-weight: 700;
     font-display: swap;
-  }
+  } */
 `;
 
 function MyApp({ Component, pageProps }) {
