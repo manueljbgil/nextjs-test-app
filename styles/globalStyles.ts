@@ -3,11 +3,36 @@ import { Button, TextField } from '@material-ui/core'
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    background: ${(props) => props.theme.bg};
-  }
+
+    @font-face {
+        font-family:"Switzer-Variable";
+        src: url('./fonts/Switzer-Variable.ttf');
+        font-style: normal;
+        font-weight: 400;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        background: ${(props) => props.theme.bg};
+    }
+
+    div{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        padding: 0 2rem;
+    }
+
+    p {
+        font-family: 'Switzer-Variable';
+        font-size: 12px;
+        color : ${(props) => props.theme.fontColor};
+    }
 `
 
 export const CustomButton = styled(Button)`

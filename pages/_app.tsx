@@ -1,7 +1,10 @@
 import { ThemeProvider } from 'styled-components'
 import { mainTheme } from '../styles/theme'
-import '../styles/globals.css'
 import GlobalStyle from '../styles/globalStyles'
+
+//fonts
+//import localFont from '@next/font/local'
+//const switzer = localFont({ src: './Switzer-Variable.ttf' })
 
 function MyApp({ Component, pageProps }) {
     return (
