@@ -1,8 +1,9 @@
+import { IconButton } from '@material-ui/core'
 import styled from 'styled-components'
 import {} from '../styles/globalStyles'
-//import burgerBrand from '../assets/burger_brand.png'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 
-const Products = ({ category, products }) => {
+const Products = ({ category, products, handleNewItem }) => {
     return (
         <Wrapper>
             <BoldText>{category.name}</BoldText>
@@ -16,14 +17,7 @@ const Products = ({ category, products }) => {
                     return (
                         <ProductInfo key={idx}>
                             {product.acf.imagem !== null && (
-                                <img
-                                    style={{
-                                        width: 100,
-                                        height: 100,
-                                        borderRadius: '50%',
-                                    }}
-                                    src={product.acf.imagem}
-                                />
+                                <CustomImage src={product.acf.imagem} />
                             )}
                             <ProductTitle>
                                 {product.title.rendered}
@@ -32,6 +26,16 @@ const Products = ({ category, products }) => {
                                 {product.acf.descricao_do_produto}
                             </ProductDescription>
                             <ProductPrice>€ {product.acf.preco}</ProductPrice>
+                            <CustomButton
+                                onClick={() =>
+                                    handleNewItem(
+                                        product.title.rendered,
+                                        Number(product.acf.preco)
+                                    )
+                                }
+                            >
+                                <AddCircleIcon />
+                            </CustomButton>
                         </ProductInfo>
                     )
                 })}
@@ -49,7 +53,7 @@ const Wrapper = styled.div`
     flex-wrap: wrap;
 `
 const BoldText = styled.p`
-    font-family: 'Switzer-Variable';
+    font-family: 'Khand-Bold';
     font-size: 28px;
     color: white;
     text-align: center;
@@ -70,7 +74,19 @@ const ProductInfo = styled.div`
     }
 `
 
+const CustomButton = styled(IconButton)`
+    margin: -11px;
+    color: ${(props) => props.theme.fg} !important;
+`
+
+const CustomImage = styled.img`
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+`
+
 const ProductTitle = styled.p`
+    font-family: 'Khand-Bold';
     font-size: 18px;
     font-weight: 900;
     letter-spacing: 1.5px;
@@ -87,5 +103,6 @@ const ProductDescription = styled.p`
 `
 
 const ProductPrice = styled.p`
+    font-family: 'Khand-Bold';
     font-size: 18px;
 `

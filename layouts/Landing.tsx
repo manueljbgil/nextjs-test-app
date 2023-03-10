@@ -4,12 +4,13 @@ import TopBar from '../components/TopBar'
 
 type Props = {
     children: Array<JSX.Element> | JSX.Element
+    categories: Array<any>
 }
 
-const Landing = ({ children }: Props) => {
+const Landing = ({ children, categories }: Props) => {
     return (
         <Wrapper>
-            <TopBar />
+            <TopBar categories={categories} />
             {children}
             <Footer />
         </Wrapper>

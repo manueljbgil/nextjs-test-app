@@ -2,6 +2,8 @@ import Head from 'next/head'
 import axios from 'axios'
 import Landing from '../layouts/Landing'
 import Products from '../components/Products'
+import styled from 'styled-components'
+import { useState } from 'react'
 
 // This function gets called at build time
 export async function getStaticProps() {
@@ -25,6 +27,11 @@ export async function getStaticProps() {
 }
 
 export default function Home({ categories, products }) {
+    const [showCart, setShowCart] = useState<boolean>(false)
+    const [itemsCount, setItemsCount] = useState<number>(0)
+    const [totalPrice, setTotalPrice] = useState<number>(0)
+    const [items, setItems] = useState<Array<any>>([])
+
     return (
         <>
             <Head>
@@ -41,8 +48,15 @@ export default function Home({ categories, products }) {
                     type="font/ttf"
                     crossOrigin=""
                 />
+                <link
+                    rel="preload"
+                    href="./fonts/Khand-Bold.ttf"
+                    as="font"
+                    type="font/ttf"
+                    crossOrigin=""
+                />
             </Head>
-            <Landing>
+            <Landing categories={categories}>
                 <div>
                     {categories
                         .filter((category) => category.parent === 0)
@@ -54,14 +68,80 @@ export default function Home({ categories, products }) {
                                         product.categories.length === 1
                                 ).length > 0 && (
                                     <Products
+                                        key={`${category}idx`}
                                         category={category}
                                         products={products}
+                                        handleNewItem={(item, price) => {
+                                            setTotalPrice(totalPrice + price)
+                                            setItemsCount(itemsCount + 1)
+                                            setItems((prevState) => [
+                                                ...prevState,
+                                                item,
+                                            ])
+                                        }}
                                     />
                                 )
                             )
                         })}
                 </div>
+                {itemsCount > 0 && (
+                    <VirtualCart
+                        onClick={() => setShowCart(!showCart)}
+                        show={showCart}
+                    >
+                        {!showCart ? (
+                            itemsCount
+                        ) : (
+                            <>
+                                <AddedItemsList>
+                                    {items.map((i) => {
+                                        return <p key={i}>{i}</p>
+                                    })}
+                                </AddedItemsList>
+                                <Price>€ {totalPrice}</Price>
+                            </>
+                        )}
+                    </VirtualCart>
+                )}
             </Landing>
         </>
     )
 }
+
+const AddedItemsList = styled.div`
+    height: 90%;
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    p {
+        font-family: 'Khand-Bold';
+        font-size: 18px;
+        color: ${(props) => props.theme.bg};
+        margin: 6px;
+    }
+`
+
+const Price = styled.p`
+    font-family: 'Khand-Bold';
+    font-size: 18px;
+    color: ${(props) => props.theme.bg};
+    margin: 6px;
+`
+
+const VirtualCart = styled.div<{ show: boolean }>`
+    background-color: ${(props) => props.theme.fg};
+    width: ${({ show }) => (show ? '90%' : '45px')};
+    height: ${({ show }) => (show ? '90vh' : '45px')};
+    position: fixed;
+    right: ${({ show }) => (show ? '50%' : '40px')};
+    bottom: ${({ show }) => (show ? '50%' : '40px')};
+    transform: translate(50%, 50%);
+    transition: right 0.2s ease-out, bottom 0.2s ease-out;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Khand-Bold';
+    font-size: 25px;
+`

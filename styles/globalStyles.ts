@@ -6,9 +6,15 @@ const GlobalStyle = createGlobalStyle`
 
     @font-face {
         font-family:"Switzer-Variable";
-        src: url('./fonts/Switzer-Variable.ttf');
+        src: url('./fonts/Switzer-Variable.ttf') ;
         font-style: normal;
         font-weight: 400;
+    }
+    
+    @font-face {
+        font-family:"Khand-Bold";
+        src: url('./fonts/Khand-Bold.ttf');
+        font-style: normal;
     }
 
     body {
