@@ -60,7 +60,7 @@ export default function Home({ categories, products }) {
                 <div>
                     {categories
                         .filter((category) => category.parent === 0)
-                        .map((category) => {
+                        .map((category, idx) => {
                             return (
                                 products?.filter(
                                     (product) =>
@@ -68,10 +68,12 @@ export default function Home({ categories, products }) {
                                         product.categories.length === 1
                                 ).length > 0 && (
                                     <Products
-                                        key={`${category}idx`}
+                                        key={`${category}idx${idx}`}
                                         category={category}
                                         products={products}
                                         handleNewItem={(item, price) => {
+                                            console.log(price)
+
                                             setTotalPrice(totalPrice + price)
                                             setItemsCount(itemsCount + 1)
                                             setItems((prevState) => [
@@ -94,8 +96,8 @@ export default function Home({ categories, products }) {
                         ) : (
                             <>
                                 <AddedItemsList>
-                                    {items.map((i) => {
-                                        return <p key={i}>{i}</p>
+                                    {items.map((i, idx) => {
+                                        return <p key={`${i}${idx}`}>{i}</p>
                                     })}
                                 </AddedItemsList>
                                 <Price>€ {totalPrice}</Price>
@@ -109,7 +111,7 @@ export default function Home({ categories, products }) {
 }
 
 const AddedItemsList = styled.div`
-    height: 90%;
+    height: 80%;
     width: inherit;
     display: flex;
     flex-direction: column;

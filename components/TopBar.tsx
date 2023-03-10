@@ -21,9 +21,9 @@ const TopBar = ({ categories }: Props) => {
                 <Menu>
                     {categories
                         .filter((category) => category.parent === 0)
-                        .map((category) => {
+                        .map((category, idx) => {
                             return (
-                                <MenuItem key={category}>
+                                <MenuItem key={`${category}${idx}`}>
                                     {category.name}
                                 </MenuItem>
                             )
