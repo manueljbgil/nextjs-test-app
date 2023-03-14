@@ -4,6 +4,7 @@ import ImageTopSection from "../public/bg-top-section.jpg";
 import LogoSrc from "../public/extra-logo-white.png";
 import Image from "next/image";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 export async function getStaticProps() {
   const BASE_URL = "http://endpoints.flaviamiranda.pt/wp-json/wp/v2/";
@@ -27,6 +28,21 @@ export async function getStaticProps() {
 export default function Home(props) {
   const { allCategories, allPosts } = props;
   const subCategories = [...allCategories];
+
+  const [order, setOrder] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const handleRemoveItem = (idx) => {
+    const newOrder = order.filter((i) => {
+      console.log(i === idx);
+      return i.id !== idx;
+    });
+    setOrder(newOrder);
+  };
+
+  useEffect(() => {
+    console.log(order);
+  }, [order]);
 
   return (
     <>
@@ -90,6 +106,20 @@ export default function Home(props) {
                             <span>{a.acf.preco}€</span>
                           </h4>
                           <p>{a.acf.descricao_do_produto} </p>
+                          <button
+                            onClick={() =>
+                              setOrder([
+                                ...order,
+                                {
+                                  id: a.id,
+                                  name: a.title.rendered,
+                                  price: a.acf.preco,
+                                },
+                              ])
+                            }
+                          >
+                            Adicionar
+                          </button>
                         </div>
                       ))
                   ) : (
@@ -156,9 +186,112 @@ export default function Home(props) {
           </Section>
         </Grid3>
       </Footer>
+
+      <OrderOnline
+        target="_blank"
+        href="https://glovoapp.com/pt/pt/aveiro/mcdonald-s-ave/"
+      >
+        GL
+      </OrderOnline>
+
+      <OrderOnline2 href="tel:912345678">CH</OrderOnline2>
+
+      {order.length > 0 && (
+        <Order className={open ? "show" : ""}>
+          <h1 onClick={() => setOpen(!open)}>
+            {open ? "Fechar" : "Ver pedido"}{" "}
+            {!open && <span>{order.length}</span>}
+          </h1>
+
+          {order.map((item, index) => (
+            <li key={item.id}>
+              {item.name} --- {item.price}€
+              <button onClick={() => handleRemoveItem(item.id)}>Remover</button>
+            </li>
+          ))}
+        </Order>
+      )}
     </>
   );
 }
+
+const Order = styled.ul`
+  position: fixed;
+  bottom: -16px;
+  height: auto;
+  left: 0;
+  width: 100%;
+  background-color: #eee;
+  color: #333;
+  padding: 0;
+  padding-left: 20px;
+  list-style: none;
+  overflow-y: auto;
+  z-index: 9;
+  max-height: 80px;
+  padding-top: 20px;
+
+  > h1 {
+    display: flex;
+    margin-top: 0;
+    cursor: pointer;
+    span {
+      border-radius: 50px;
+      padding: 3px 6px;
+      font-size: 10px;
+      color: #fff;
+      background-color: orange;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-height: 16px;
+    }
+  }
+
+  > li {
+    padding: 15px 0;
+    width: calc(100% - 90px);
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dotted #ccc;
+
+    button {
+      border: none;
+      font-size: 14px;
+      color: #333;
+    }
+  }
+
+  &.show {
+    height: 100vh;
+    padding: 16px;
+    top: -16px;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+`;
+
+const OrderOnline = styled.a`
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: #333;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const OrderOnline2 = styled(OrderOnline)`
+  bottom: 80px;
+`;
 
 const Grid3 = styled.div`
   display: grid;
@@ -387,6 +520,15 @@ const ListProducts = styled.div`
       line-height: 24px;
       margin-bottom: 0;
     }
+  }
+
+  button {
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-top: 16px;
+    background: #333;
+    color: #fff;
   }
 
   &:empty {
