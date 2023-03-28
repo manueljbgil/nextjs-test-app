@@ -1,5 +1,5 @@
-import "../styles/globals.css";
-import { createGlobalStyle } from "styled-components";
+import '../styles/globals.css'
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
     @font-face {
@@ -30,15 +30,17 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 700;
     font-display: swap;
   } */
-`;
+`
 
 function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <GlobalStyle />
-      <Component {...pageProps} />
-    </>
-  );
+    const getLayout = Component.getLayout ?? ((page) => page)
+
+    return (
+        <main>
+            <GlobalStyle />
+            {getLayout(<Component {...pageProps} />)}
+        </main>
+    )
 }
 
-export default MyApp;
+export default MyApp

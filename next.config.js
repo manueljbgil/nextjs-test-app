@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-};
+    reactStrictMode: true,
+    compiler: {
+        styledComponents: true,
+    },
+    images: {
+        domains: ['endpoints.flaviamiranda.pt'],
+    },
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
